@@ -2,897 +2,483 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Bio Coding Academy</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BioCoding Academy</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:#f7fafb;
-  color:#102a2e;
-  line-height:1.6;
-}
-
-/* NAVBAR */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #e5eeee;
-}
-
-.navbar{
-  max-width:1200px;
-  margin:auto;
-  padding:18px 25px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:800;
-  color:#137f83;
-}
-
-.logo span{
-  color:#102a2e;
-}
-
-nav{
-  display:flex;
-  align-items:center;
-  gap:25px;
-}
-
-nav a{
-  text-decoration:none;
-  color:#30484b;
-  font-weight:600;
-}
-
-nav a:hover{
-  color:#137f83;
-}
-
-.login-btn{
-  background:#137f83;
-  color:white!important;
-  padding:11px 20px;
-  border-radius:9px;
-}
-
-/* HERO */
-
-.hero{
-  min-height:650px;
-  display:flex;
-  align-items:center;
-  background:
-  radial-gradient(circle at 85% 20%,#d8ffff 0,transparent 30%),
-  linear-gradient(135deg,#efffff,#ffffff);
-}
-
-.hero-container{
-  max-width:1200px;
-  width:100%;
-  margin:auto;
-  padding:80px 25px;
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:50px;
-  align-items:center;
-}
-
-.badge{
-  display:inline-block;
-  background:#ddf7f7;
-  color:#137f83;
-  padding:8px 15px;
-  border-radius:30px;
-  font-weight:bold;
-  margin-bottom:20px;
-}
-
-.hero h1{
-  font-size:58px;
-  line-height:1.05;
-  margin-bottom:25px;
-}
-
-.hero h1 span{
-  color:#137f83;
-}
-
-.hero p{
-  font-size:19px;
-  color:#607174;
-  max-width:650px;
-  margin-bottom:30px;
-}
-
-.buttons{
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
-.primary{
-  background:#137f83;
-  color:white;
-  padding:15px 27px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-.secondary{
-  background:white;
-  color:#137f83;
-  border:1px solid #b9d9da;
-  padding:15px 27px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-.hero-card{
-  background:white;
-  border-radius:25px;
-  padding:35px;
-  box-shadow:0 20px 60px rgba(18,90,94,.12);
-  border:1px solid #e1eeee;
-}
-
-.dna{
-  font-size:90px;
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.hero-card h3{
-  text-align:center;
-  margin-bottom:15px;
-}
-
-.hero-card p{
-  text-align:center;
-  font-size:15px;
-}
-
-/* STATS */
-
-.stats{
-  background:#102a2e;
-  color:white;
-}
-
-.stats-container{
-  max-width:1100px;
-  margin:auto;
-  padding:35px 25px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  text-align:center;
-}
-
-.stat h2{
-  font-size:32px;
-  color:#67d5d5;
-}
-
-.stat p{
-  color:#b9c9ca;
-}
-
-/* GENERAL */
-
-section{
-  padding:90px 25px;
-}
-
-.container{
-  max-width:1200px;
-  margin:auto;
-}
-
-.section-title{
-  text-align:center;
-  margin-bottom:50px;
-}
-
-.section-title h2{
-  font-size:40px;
-  margin-bottom:10px;
-}
-
-.section-title p{
-  color:#687b7d;
-}
-
-/* COURSES */
-
-.course-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:22px;
-}
-
-.course{
-  background:white;
-  padding:30px;
-  border-radius:18px;
-  border:1px solid #e2ebeb;
-  transition:.25s;
-}
-
-.course:hover{
-  transform:translateY(-7px);
-  box-shadow:0 15px 35px rgba(0,0,0,.08);
-}
-
-.icon{
-  width:60px;
-  height:60px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:15px;
-  background:#e5f8f8;
-  font-size:28px;
-  margin-bottom:20px;
-}
-
-.course h3{
-  margin-bottom:12px;
-}
-
-.course p{
-  color:#687b7d;
-  font-size:15px;
-  margin-bottom:20px;
-}
-
-.learn{
-  color:#137f83;
-  font-weight:bold;
-}
-
-/* ABOUT */
-
-.about{
-  background:white;
-}
-
-.about-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:60px;
-  align-items:center;
-}
-
-.about h2{
-  font-size:40px;
-  margin-bottom:20px;
-}
-
-.about p{
-  color:#687b7d;
-  margin-bottom:20px;
-}
-
-.features{
-  display:grid;
-  gap:15px;
-}
-
-.feature{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  font-weight:bold;
-}
-
-/* REVIEWS */
-
-.review-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-}
-
-.review{
-  background:white;
-  padding:28px;
-  border-radius:18px;
-  border:1px solid #e2ebeb;
-}
-
-.stars{
-  color:#f4b400;
-  margin-bottom:15px;
-  font-size:20px;
-}
-
-.review p{
-  color:#596c6e;
-  margin-bottom:20px;
-}
-
-.student{
-  font-weight:bold;
-}
-
-/* CTA */
-
-.cta{
-  background:linear-gradient(135deg,#137f83,#102a2e);
-  color:white;
-  text-align:center;
-  border-radius:25px;
-  margin:70px auto;
-  max-width:1150px;
-  padding:70px 25px;
-}
-
-.cta h2{
-  font-size:42px;
-  margin-bottom:15px;
-}
-
-.cta p{
-  color:#c7dddd;
-  margin-bottom:30px;
-}
-
-/* FOOTER */
-
-footer{
-  background:#0b2023;
-  color:white;
-  padding:60px 25px 25px;
-}
-
-.footer-grid{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr;
-  gap:40px;
-}
-
-footer h3{
-  margin-bottom:18px;
-}
-
-footer p,
-footer a{
-  color:#aebfc0;
-  text-decoration:none;
-  display:block;
-  margin-bottom:10px;
-}
-
-.copyright{
-  max-width:1200px;
-  margin:40px auto 0;
-  padding-top:25px;
-  border-top:1px solid #294043;
-  color:#829698;
-  text-align:center;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-  .hero-container{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .hero p{
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  .buttons{
-    justify-content:center;
-  }
-
-  .course-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .stats-container{
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
-  }
-
-  .about-grid{
-    grid-template-columns:1fr;
-  }
-
-  .review-grid{
-    grid-template-columns:1fr;
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:600px){
-
-  .navbar{
-    padding:15px;
-  }
-
-  .logo{
-    font-size:18px;
-  }
-
-  nav{
-    gap:10px;
-  }
-
-  nav a:not(.login-btn){
-    display:none;
-  }
-
-  .hero{
-    min-height:auto;
-  }
-
-  .hero-container{
-    padding:70px 20px;
-  }
-
-  .hero h1{
-    font-size:42px;
-  }
-
-  .hero p{
-    font-size:17px;
-  }
-
-  .course-grid{
-    grid-template-columns:1fr;
-  }
-
-  .stats-container{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .section-title h2,
-  .about h2{
-    font-size:32px;
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr;
-  }
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#0a0f1a;color:#e0e0e0;line-height:1.5}
+:root{--b:#10b981;--a:#00d4ff;--p:#8b5cf6;--c:#141c2b;--bd:#2a3444}
+.w{max-width:1200px;margin:0 auto;padding:0 20px}
+a{text-decoration:none;color:inherit;cursor:pointer}
+nav{position:fixed;top:0;width:100%;background:rgba(10,15,26,.95);backdrop-filter:blur(10px);border-bottom:1px solid #222;z-index:1000}
+.ni{display:flex;justify-content:space-between;align-items:center;height:65px}
+.lg{font-weight:700;font-size:1.2rem}
+.lg span{color:var(--b)}
+.nl{display:flex;gap:15px;list-style:none;align-items:center}
+.nl a{font-size:.82rem;color:#bbb}
+.nl a:hover{color:#fff}
+.cta{background:var(--b);color:#000!important;padding:8px 16px;border-radius:20px;font-weight:600}
+.hero{padding:130px 0 50px;background:radial-gradient(circle at 20% 30%,rgba(16,185,129,.15),transparent 50%),radial-gradient(circle at 80% 70%,rgba(0,212,255,.1),transparent 50%)}
+.hero h1{font-size:2.6rem;margin-bottom:15px;background:linear-gradient(135deg,#10b981,#00d4ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:#9ca3af;max-width:600px;margin-bottom:22px}
+.btn{padding:11px 22px;border-radius:22px;border:none;cursor:pointer;font-weight:600;transition:.3s;display:inline-block;background:var(--b);color:#000;font-size:.85rem}
+.btn:hover{transform:translateY(-2px)}
+.bo{background:transparent;border:2px solid var(--b);color:var(--b)}
+.bs{background:#222;color:#fff;border:1px solid #333}
+.sec{padding:60px 0}
+.st{text-align:center;font-size:1.9rem;margin-bottom:15px}
+.bdg{display:inline-block;background:rgba(16,185,129,.1);color:var(--b);padding:4px 14px;border-radius:18px;font-size:.72rem;margin-bottom:8px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px}
+.cd{background:var(--c);border:1px solid var(--bd);border-radius:14px;padding:20px;transition:.3s}
+.cd:hover{transform:translateY(-4px)}
+.cd h3{font-size:1.2rem;margin:8px 0}
+.cd .ic{font-size:1.8rem}
+.cd p{color:#9ca3af;font-size:.88rem}
+.en{display:block;text-align:center;border:2px solid var(--b);color:var(--b);padding:8px;border-radius:20px;font-weight:600;cursor:pointer;margin-top:10px;background:none;width:100%}
+.en:hover{background:var(--b);color:#000}
+.vc{background:var(--c);border:1px solid var(--bd);border-radius:12px;overflow:hidden;cursor:pointer}
+.vt{aspect-ratio:16/9;background:#1e2a3a;display:flex;align-items:center;justify-content:center;position:relative}
+.pb{width:45px;height:45px;background:var(--b);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.vi{padding:12px}
+.vi h4{font-size:.95rem;margin-bottom:4px}
+.vi p{font-size:.78rem;color:#9ca3af}
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.fg label{font-size:.72rem;color:#9ca3af;text-transform:uppercase}
+input,select,textarea{padding:10px;border-radius:7px;background:#0a0f1a;border:1px solid #333;color:#fff;width:100%;font-family:inherit;font-size:.88rem}
+input:focus,select:focus,textarea:focus{border-color:var(--b);outline:none}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fb{position:fixed;bottom:18px;left:18px;width:46px;height:46px;border-radius:50%;background:#222;border:1px solid #444;color:#aaa;font-size:1.2rem;cursor:pointer;z-index:900}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:2000;padding:15px}
+.ov.on{display:flex}
+.pn{background:#1a2332;border:1px solid #333;border-radius:14px;padding:22px;width:100%;max-width:900px;max-height:90vh;overflow-y:auto}
+.tb{background:#333;border:none;padding:7px 13px;border-radius:16px;color:#ccc;cursor:pointer;margin:3px;font-size:.75rem}
+.tb.on{background:var(--b);color:#000}
+.ts{position:fixed;bottom:18px;right:18px;padding:12px 18px;border-radius:9px;background:#1e2a3a;border-left:4px solid var(--b);transform:translateY(100px);opacity:0;transition:.4s;z-index:3000;max-width:280px;font-size:.85rem}
+.ts.on{transform:translateY(0);opacity:1}
+.ts.er{border-color:#ef4444}
+.md{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1500;padding:15px}
+.md.on{display:flex}
+.mc{background:var(--c);border-radius:14px;padding:25px;max-width:520px;width:100%;max-height:85vh;overflow-y:auto}
+.lb{background:var(--c);border-radius:18px;padding:30px;width:90%;max-width:360px;text-align:center}
+.cb{position:fixed;bottom:18px;right:18px;width:54px;height:54px;border-radius:50%;background:var(--b);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.3rem;z-index:1000}
+.cbx{position:fixed;bottom:82px;right:18px;width:310px;height:400px;background:#141c2b;border:1px solid var(--bd);border-radius:18px;display:none;flex-direction:column;overflow:hidden;z-index:1001}
+.cbx.on{display:flex}
+.fl{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;justify-content:center}
+.fl input,.fl select{max-width:210px}
+.fq{background:var(--c);border:1px solid var(--bd);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.fqq{padding:13px 18px;cursor:pointer;font-weight:600;display:flex;justify-content:space-between}
+.fqa{padding:0 18px;max-height:0;overflow:hidden;transition:.3s;color:#9ca3af;font-size:.88rem}
+.fq.on .fqa{padding:13px 18px;max-height:300px}
+.nb{background:linear-gradient(135deg,#10b981,#0d9488);padding:35px 0;text-align:center}
+.nb h3{font-size:1.6rem;margin-bottom:10px;color:#fff}
+.nb input{max-width:280px;display:inline-block;margin-right:8px;background:#fff;color:#000;border:none}
+.ct{border:3px solid var(--b);border-radius:18px;padding:30px;text-align:center;background:#0d1420;max-width:520px;margin:25px auto}
+.ct h2{font-size:1.6rem;margin:12px 0;background:linear-gradient(135deg,#10b981,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ct .sl{width:60px;height:60px;border-radius:50%;background:var(--b);margin:12px auto;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#000}
+.str{cursor:pointer;font-size:1.6rem;color:#2a3444;display:inline-block}
+.str .on{color:#fbbf24}
+.pgb{background:#2a3444;border-radius:8px;height:8px;overflow:hidden;margin:6px 0}
+.pgf{height:100%;background:linear-gradient(90deg,#10b981,#00d4ff);transition:width 1s}
+.prf{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin:20px 0}
+.pi{text-align:center}
+.pn2{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#10b981,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pl{color:#9ca3af;font-size:.8rem}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{padding:8px;text-align:left;border-bottom:1px solid #333;font-size:.8rem}
+th{color:#888}
+.dl{background:rgba(239,68,68,.15);border:none;color:#ef4444;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:.72rem}
+footer{background:#0d1420;padding:25px 0;text-align:center;border-top:1px solid #222;color:#888;font-size:.82rem}
+@media(max-width:768px){.nl{display:none}.hero h1{font-size:1.8rem}.fr{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
 
-<header>
+<div class="ov" id="lo"><div class="lb">
+<h2>🔐 Register / Login</h2>
+<p style="color:#aaa;margin:12px 0;font-size:.88rem">Enter name and phone to continue</p>
+<input id="ln" placeholder="Full Name" style="margin-bottom:8px">
+<input id="lp" placeholder="Phone Number" style="margin-bottom:12px">
+<button class="btn" onclick="dLg()" style="width:100%">Continue</button>
+</div></div>
 
-<div class="navbar">
+<nav><div class="w ni">
+<a class="lg">🧬 BioCoding<span>Academy</span></a>
+<ul class="nl">
+<li><a onclick="s('about')">About</a></li>
+<li><a onclick="s('courses')">Courses</a></li>
+<li><a onclick="s('videos')">Videos</a></li>
+<li><a onclick="s('playlists')">Playlists</a></li>
+<li><a onclick="s('blog')">Blog</a></li>
+<li><a onclick="s('schedule')">Schedule</a></li>
+<li><a onclick="s('faq')">FAQ</a></li>
+<li><a onclick="s('contact')">Contact</a></li>
+<li><a onclick="s('dashboard')">Dashboard</a></li>
+<li><a onclick="s('register')" class="cta">Enroll</a></li>
+</ul></div></nav>
 
-<div class="logo">
-Bio <span>Coding Academy</span>
+<header class="hero"><div class="w">
+<span class="bdg">🎓 BioCoding Academy</span>
+<h1>Master Biotechnology, AI & Programming</h1>
+<p>Join 500+ students learning cutting-edge skills from experts.</p>
+<a class="btn" onclick="s('register')">Enroll Now</a>
+<a class="btn bo" onclick="s('courses')">Browse Courses</a>
+<div class="prf">
+<div class="pi"><div class="pn2" id="cS">0</div><div class="pl">Students</div></div>
+<div class="pi"><div class="pn2" id="cC">0</div><div class="pl">Courses</div></div>
+<div class="pi"><div class="pn2" id="cV">0</div><div class="pl">Videos</div></div>
+<div class="pi"><div class="pn2">98%</div><div class="pl">Satisfaction</div></div>
+</div></div></header>
+
+<section class="sec" id="about"><div class="w">
+<div class="st"><span class="bdg">About</span><br>Why BioCoding Academy?</div>
+<div class="g">
+<div class="cd"><div class="ic">🧬</div><h3>Biotechnology</h3><p>CRISPR, bioinformatics, molecular biology.</p></div>
+<div class="cd"><div class="ic">🤖</div><h3>AI & ML</h3><p>Deep learning, neural networks, AI apps.</p></div>
+<div class="cd"><div class="ic">💻</div><h3>Programming</h3><p>Python, R, JavaScript for real projects.</p></div>
+</div></div></section>
+
+<section class="sec" id="courses" style="background:#0d1420"><div class="w">
+<div class="st"><span class="bdg">Courses</span><br>Course Catalog</div>
+<div class="fl">
+<input id="cs" placeholder="🔍 Search..." oninput="fC()">
+<select id="cc" onchange="fC()"><option value="">All Categories</option><option>Biotechnology</option><option>AI</option><option>Programming</option></select>
+<select id="cp" onchange="fC()"><option value="">All Prices</option><option value="free">Free</option><option value="paid">Paid</option></select>
+<button class="btn bs" onclick="rC()">Reset</button>
+</div>
+<div class="g" id="cG"></div>
+</div></section>
+
+<section class="sec" id="videos"><div class="w">
+<div class="st"><span class="bdg">Videos</span><br>Video Library</div>
+<div class="fl">
+<input id="vs" placeholder="🔍 Search..." oninput="fV()">
+<select id="vc" onchange="fV()"><option value="">All Categories</option><option>Biotechnology</option><option>AI</option><option>Programming</option></select>
+<button class="btn bs" onclick="rV()">Reset</button>
+</div>
+<div class="g" id="vG"></div>
+</div></section>
+
+<section class="sec" id="playlists" style="background:#0d1420"><div class="w">
+<div class="st"><span class="bdg">Playlists</span><br>Learning Paths</div>
+<div class="g" id="pG"></div>
+</div></section>
+
+<section class="sec" id="blog"><div class="w">
+<div class="st"><span class="bdg">Blog</span><br>Articles</div>
+<div class="g" id="bG"></div>
+</div></section>
+
+<section class="sec" id="schedule" style="background:#0d1420"><div class="w">
+<div class="st"><span class="bdg">Schedule</span><br>Upcoming Events</div>
+<div id="sL"></div>
+</div></section>
+
+<section class="sec" id="testimonials"><div class="w">
+<div class="st"><span class="bdg">Testimonials</span><br>What Students Say</div>
+<div class="g" id="tG"></div>
+<div style="text-align:center;margin-top:25px">
+<h4>Rate Your Experience</h4>
+<div class="str" id="stR">
+<span onclick="setR(1)">★</span><span onclick="setR(2)">★</span><span onclick="setR(3)">★</span><span onclick="setR(4)">★</span><span onclick="setR(5)">★</span>
+</div>
+<p id="rt" style="color:#9ca3af;margin-top:6px;font-size:.85rem">Click stars to rate</p>
+</div>
+</div></section>
+
+<section class="sec" id="faq" style="background:#0d1420"><div class="w">
+<div class="st"><span class="bdg">FAQ</span><br>Common Questions</div>
+<div id="fL"></div>
+</div></section>
+
+<section class="sec" id="dashboard"><div class="w">
+<div class="st"><span class="bdg">Dashboard</span><br>My Learning</div>
+<div id="dC"></div>
+<div class="ct">
+<div class="sl">🎓</div>
+<h2>Certificate of Completion</h2>
+<p style="color:#e0e0e0">This certifies that</p>
+<h3 style="font-size:1.3rem;margin:8px 0;color:var(--b)" id="ctn">[Your Name]</h3>
+<p style="color:#9ca3af">has completed BioCoding Academy courses</p>
+<p style="color:#9ca3af;margin-top:12px">BioCoding Academy • 2025</p>
+</div>
+</div></section>
+
+<section class="sec" id="register" style="background:#0d1420"><div class="w">
+<div class="st"><span class="bdg">Enroll</span><br>Register for a Course</div>
+<form id="rf" style="max-width:500px;margin:0 auto">
+<div class="fr">
+<div class="fg"><label>Full Name *</label><input id="rn" required></div>
+<div class="fg"><label>Phone *</label><input id="rp" required></div>
+</div>
+<div class="fg"><label>Email</label><input id="re" type="email"></div>
+<div class="fg"><label>Course *</label><select id="rc" required></select></div>
+<div class="fg"><label>Coupon (Optional)</label><input id="rcp" placeholder="Enter code"></div>
+<button class="btn" type="submit" style="width:100%">Submit Registration</button>
+</form>
+</div></section>
+
+<section class="sec" id="contact"><div class="w">
+<div class="st"><span class="bdg">Contact</span><br>Customer Service</div>
+<form id="cf" style="max-width:500px;margin:0 auto">
+<div class="fr">
+<div class="fg"><label>Name *</label><input id="cn" required></div>
+<div class="fg"><label>Email *</label><input id="ce" type="email" required></div>
+</div>
+<div class="fg"><label>Message *</label><textarea id="cm" rows="5" required></textarea></div>
+<button class="btn" type="submit" style="width:100%">Send Message</button>
+</form>
+</div></section>
+
+<div class="nb"><div class="w">
+<h3>📬 Get Course Updates & Discounts</h3>
+<input id="ne" placeholder="Enter your email">
+<button class="btn bs" onclick="subN()">Subscribe</button>
+</div></div>
+
+<div class="cb" onclick="tC()">💬</div>
+<div class="cbx" id="cbx">
+<div style="background:var(--b);padding:12px;font-weight:700;color:#000">Support Chat</div>
+<div id="cM" style="flex:1;padding:12px;overflow-y:auto;font-size:.83rem"></div>
+<div style="display:flex;border-top:1px solid var(--bd)">
+<input id="cI" placeholder="Type..." style="border:none;border-radius:0;margin:0" onkeydown="if(event.key==='Enter')sC()">
+<button onclick="sC()" class="btn" style="border-radius:0">➤</button>
+</div></div>
+
+<footer><div class="w">© 2025 BioCoding Academy. All rights reserved.</div></footer>
+
+<div class="md" id="md"><div class="mc" id="mc"></div></div>
+
+<button class="fb" onclick="oA()">🔐</button>
+
+<div class="ov" id="ao"><div class="pn">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+<h2>Admin Dashboard</h2><button onclick="cA()" style="background:none;border:none;color:#aaa;font-size:1.3rem;cursor:pointer">✕</button>
+</div>
+<div id="aa">
+<p style="color:#aaa;font-size:.82rem;margin-bottom:8px">Authorized names only</p>
+<input id="an" placeholder="Admin Name" style="margin-bottom:6px">
+<input id="ap" type="password" placeholder="Password" style="margin-bottom:10px">
+<button class="btn" onclick="chkP()" style="width:100%">Login</button>
+</div>
+<div id="ac" style="display:none">
+<div style="margin-bottom:10px">
+<button class="tb on" onclick="sw(event,'tC')">Courses</button>
+<button class="tb" onclick="sw(event,'tV')">Videos</button>
+<button class="tb" onclick="sw(event,'tP')">Playlists</button>
+<button class="tb" onclick="sw(event,'tB')">Blog</button>
+<button class="tb" onclick="sw(event,'tS')">Schedule</button>
+<button class="tb" onclick="sw(event,'tCp')">Coupons</button>
+<button class="tb" onclick="sw(event,'tT')">Testimonials</button>
+<button class="tb" onclick="sw(event,'tF')">FAQ</button>
+<button class="tb" onclick="sw(event,'tR')">Registrations</button>
+<button class="tb" onclick="sw(event,'tM')">Messages</button>
+<button class="tb" onclick="sw(event,'tRt')">Ratings</button>
+<button class="tb" onclick="sw(event,'tN')">Newsletter</button>
 </div>
 
-<nav>
-<a href="#home">Home</a>
-<a href="#courses">Courses</a>
-<a href="#about">About</a>
-<a href="#reviews">Reviews</a>
-<a href="#contact">Contact</a>
-<a href="#" class="login-btn">Login</a>
-</nav>
-
+<div id="tC" class="tc">
+<h3>Add Course</h3>
+<input id="ccT" placeholder="Title" style="margin-bottom:5px">
+<select id="ccC" style="margin-bottom:5px"><option>Biotechnology</option><option>AI</option><option>Programming</option></select>
+<div class="fr"><input id="ccD" placeholder="Duration"><input id="ccP" placeholder="Price"></div>
+<input id="ccI" placeholder="Icon emoji" value="📚" style="margin:5px 0">
+<textarea id="ccDc" placeholder="Short description" style="margin-bottom:5px"></textarea>
+<textarea id="ccFd" placeholder="Full description" style="margin-bottom:6px"></textarea>
+<button onclick="aCrs()" class="btn">Add Course</button>
+<div id="cL" style="margin-top:10px"></div>
 </div>
 
-</header>
-
-
-<!-- HERO -->
-
-<section class="hero" id="home">
-
-<div class="hero-container">
-
-<div>
-
-<div class="badge">🧬 Learn the Future of Biotechnology</div>
-
-<h1>
-Learn.
-<span>Code.</span>
-Discover.
-</h1>
-
-<p>
-Bio Coding Academy is a modern educational platform combining
-Biotechnology, Bioinformatics, Computational Drug Design and Programming
-to help students build real-world scientific and technological skills.
-</p>
-
-<div class="buttons">
-
-<a href="#courses" class="primary">
-Explore Courses
-</a>
-
-<a href="#about" class="secondary">
-Discover More
-</a>
-
+<div id="tV" class="tc" style="display:none">
+<h3>Add Video</h3>
+<input id="vvT" placeholder="Title" style="margin-bottom:5px">
+<select id="vvC" style="margin-bottom:5px"><option>Biotechnology</option><option>AI</option><option>Programming</option></select>
+<input id="vvU" placeholder="Video URL" style="margin-bottom:5px">
+<textarea id="vvD" placeholder="Description" style="margin-bottom:5px"></textarea>
+<select id="vvP" style="margin-bottom:6px"><option value="">No Playlist</option></select>
+<button onclick="aVid()" class="btn">Add Video</button>
+<div id="vL" style="margin-top:10px"></div>
 </div>
 
+<div id="tP" class="tc" style="display:none">
+<h3>Create Playlist</h3>
+<input id="ppN" placeholder="Playlist Name" style="margin-bottom:5px">
+<textarea id="ppD" placeholder="Description" style="margin-bottom:6px"></textarea>
+<button onclick="aPl()" class="btn">Create</button>
+<div id="pL" style="margin-top:10px"></div>
 </div>
 
-
-<div class="hero-card">
-
-<div class="dna">🧬</div>
-
-<h3>Science + Technology</h3>
-
-<p>
-Connecting biological sciences with computational technologies
-to create the next generation of scientific learners.
-</p>
-
+<div id="tB" class="tc" style="display:none">
+<h3>Add Blog Post</h3>
+<input id="bbT" placeholder="Title" style="margin-bottom:5px">
+<textarea id="bbC" placeholder="Content" rows="5" style="margin-bottom:6px"></textarea>
+<button onclick="aBl()" class="btn">Publish</button>
+<div id="bL" style="margin-top:10px"></div>
 </div>
 
+<div id="tS" class="tc" style="display:none">
+<h3>Add Event</h3>
+<input id="ssT" placeholder="Event Title" style="margin-bottom:5px">
+<div class="fr"><input id="ssD" type="date"><input id="ssTm" type="time"></div>
+<button onclick="aEv()" class="btn" style="margin-top:6px">Add Event</button>
+<div id="sL" style="margin-top:10px"></div>
 </div>
 
-</section>
-
-
-<!-- STATS -->
-
-<div class="stats">
-
-<div class="stats-container">
-
-<div class="stat">
-<h2>0+</h2>
-<p>Students</p>
+<div id="tCp" class="tc" style="display:none">
+<h3>Create Coupon</h3>
+<input id="cpC" placeholder="Code (e.g., SAVE20)" style="margin-bottom:5px">
+<div class="fr"><input id="cpD" placeholder="Discount %" type="number"><input id="cpE" type="date"></div>
+<button onclick="aCp()" class="btn" style="margin-top:6px">Create Coupon</button>
+<div id="cpL" style="margin-top:10px"></div>
 </div>
 
-<div class="stat">
-<h2>0+</h2>
-<p>Courses</p>
+<div id="tT" class="tc" style="display:none">
+<h3>Add Testimonial</h3>
+<input id="ttN" placeholder="Student Name" style="margin-bottom:5px">
+<input id="ttR" placeholder="Course Taken" style="margin-bottom:5px">
+<textarea id="ttX" placeholder="Testimonial" style="margin-bottom:5px"></textarea>
+<input id="ttS" placeholder="Stars (1-5)" type="number" min="1" max="5" value="5" style="margin-bottom:6px">
+<button onclick="aTs()" class="btn">Add</button>
+<div id="tL" style="margin-top:10px"></div>
 </div>
 
-<div class="stat">
-<h2>0+</h2>
-<p>Reviews</p>
+<div id="tF" class="tc" style="display:none">
+<h3>Add FAQ</h3>
+<input id="ffQ" placeholder="Question" style="margin-bottom:5px">
+<textarea id="ffA" placeholder="Answer" style="margin-bottom:6px"></textarea>
+<button onclick="aFq()" class="btn">Add FAQ</button>
+<div id="fL" style="margin-top:10px"></div>
 </div>
 
-<div class="stat">
-<h2>0+</h2>
-<p>Certificates</p>
+<div id="tR" class="tc" style="display:none">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span>Total: <strong id="ttC">0</strong></span>
+<button onclick="exCSV()" class="btn bs">Export CSV</button>
+</div>
+<div id="rT"></div>
 </div>
 
+<div id="tM" class="tc" style="display:none">
+<h3>Messages & Replies</h3>
+<div id="mL"></div>
 </div>
 
+<div id="tRt" class="tc" style="display:none">
+<h3>Site Ratings</h3>
+<div id="rtL"></div>
 </div>
 
-
-<!-- COURSES -->
-
-<section id="courses">
-
-<div class="container">
-
-<div class="section-title">
-
-<h2>Explore Our Courses</h2>
-
-<p>
-Build knowledge across biology, technology and computational science.
-</p>
-
+<div id="tN" class="tc" style="display:none">
+<h3>Newsletter</h3>
+<div id="nL"></div>
 </div>
-
-
-<div class="course-grid">
-
-
-<div class="course">
-
-<div class="icon">🧬</div>
-
-<h3>Biotechnology</h3>
-
-<p>
-Explore modern biotechnology, molecular biology,
-genetics and their real-world applications.
-</p>
-
-<div class="learn">Explore →</div>
-
 </div>
+</div></div>
 
+<div class="ts" id="ts"></div>
 
-<div class="course">
+<script>
+const FC={apiKey:"AIzaSyBmMj0example",authDomain:"biocoding.firebaseapp.com",databaseURL:"https://biocoding-default-rtdb.firebaseio.com",projectId:"biocoding",storageBucket:"biocoding.appspot.com",messagingSenderId:"123",appId:"1:123:web:abc"};
+firebase.initializeApp(FC);
+const db=firebase.database();
+const AP="B!oC0d1ng_@dm1n_2024$";
+const AN=["Omar Abdelrahman","Fatma Omar","Momen Sayed"];
+let U=JSON.parse(localStorage.getItem('bc_u')||'null');
+let pd=null,av=false,aC=[],aV=[],aF=[],aT=[],aP=[],aB=[],aE=[],aCp=[],aMs=[],aRt=[],aNl=[],aRg=[];
 
-<div class="icon">💻</div>
+function T(m,e){const t=document.getElementById('ts');t.textContent=m;t.className='ts'+(e?' er':'');t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3000)}
+function s(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+function rq(cb){if(U)return cb();pd=cb;document.getElementById('lo').classList.add('on')}
+function dLg(){const n=document.getElementById('ln').value.trim(),p=document.getElementById('lp').value.trim();if(!n||!p){alert('Enter name and phone');return}U={name:n,phone:p,id:Date.now().toString()};localStorage.setItem('bc_u',JSON.stringify(U));document.getElementById('lo').classList.remove('on');document.getElementById('ctn').textContent=n;T('Welcome '+n);if(pd){const c=pd;pd=null;c()}init()}
 
-<h3>Bioinformatics</h3>
+function rC(o){aC=Object.values(o||{});const g=document.getElementById('cG');if(!aC.length){g.innerHTML='<p style="text-align:center;grid-column:1/-1;color:#9ca3af">No courses</p>';pSel([]);return}g.innerHTML=aC.map(c=>`<div class="cd"><div class="ic">${c.icon||'📚'}</div><h3>${c.title}</h3><p>${c.desc||''}</p><p><strong>Duration:</strong> ${c.duration||'N/A'} | <strong>Price:</strong> ${c.price||'N/A'}</p><button class="en" onclick="dC('${c.id}')">Details</button><button class="en" style="border-color:var(--p);color:var(--p)" onclick="eC('${c.title}')">Enroll</button></div>`).join('');pSel(aC);document.getElementById('cC').textContent=aC.length}
 
-<p>
-Learn how computational tools and programming
-are used to solve biological problems.
-</p>
+function dC(id){const c=aC.find(x=>x.id===id);if(!c)return;document.getElementById('mc').innerHTML=`<h2>${c.icon||''} ${c.title}</h2><p style="margin:10px 0"><strong>Category:</strong> ${c.category}</p><p><strong>Duration:</strong> ${c.duration||'N/A'}</p><p><strong>Price:</strong> ${c.price||'N/A'}</p><p style="margin-top:12px"><strong>About:</strong></p><p style="color:#9ca3af;margin-top:5px">${c.fullDesc||c.desc||'No description'}</p><div style="margin-top:15px;display:flex;gap:8px"><button class="btn" onclick="eC('${c.title}');cM()">Enroll Now</button><button class="btn bs" onclick="cM()">Close</button></div>`;document.getElementById('md').classList.add('on')}
+function cM(){document.getElementById('md').classList.remove('on')}
+document.getElementById('md').addEventListener('click',e=>{if(e.target===e.currentTarget)cM()});
 
-<div class="learn">Explore →</div>
+function pSel(a){const s=document.getElementById('rc');s.innerHTML='<option value="">Select course</option>'+a.map(c=>`<option>${c.title}</option>`).join('')}
+function eC(t){rq(()=>{document.getElementById('rc').value=t;s('register')})}
 
-</div>
+function rV(o){aV=Object.values(o||{});document.getElementById('vG').innerHTML=aV.map(v=>`<div class="vc" onclick="wV('${v.url}')"><div class="vt"><div class="pb">▶</div><span style="position:absolute;top:8px;left:8px;background:${v.category==='Biotechnology'?'var(--b)':v.category==='AI'?'var(--a)':'var(--p)'};padding:3px 9px;border-radius:8px;font-size:.65rem">${v.category}</span></div><div class="vi"><h4>${v.title}</h4><p>${v.desc||''}</p></div></div>`).join('')||'<p style="text-align:center;grid-column:1/-1;color:#9ca3af">No videos</p>';document.getElementById('cV').textContent=aV.length}
+function wV(u){rq(()=>window.open(u,'_blank'))}
 
+function fC(){const s=document.getElementById('cs').value.toLowerCase(),c=document.getElementById('cc').value,p=document.getElementById('cp').value;let a=aC;if(s)a=a.filter(x=>x.title.toLowerCase().includes(s)||(x.desc||'').toLowerCase().includes(s));if(c)a=a.filter(x=>x.category===c);if(p==='free')a=a.filter(x=>!x.price||x.price==='0'||x.price.toLowerCase()==='free');if(p==='paid')a=a.filter(x=>x.price&&x.price!=='0'&&x.price.toLowerCase()!=='free');document.getElementById('cG').innerHTML=a.map(x=>`<div class="cd"><div class="ic">${x.icon||'📚'}</div><h3>${x.title}</h3><p>${x.desc||''}</p><p><strong>Price:</strong> ${x.price||'N/A'}</p><button class="en" onclick="dC('${x.id}')">Details</button></div>`).join('')||'<p style="text-align:center;grid-column:1/-1">No matches</p>'}
+function rC(){document.getElementById('cs').value='';document.getElementById('cc').value='';document.getElementById('cp').value='';fC()}
+function fV(){const s=document.getElementById('vs').value.toLowerCase(),c=document.getElementById('vc').value;let a=aV;if(s)a=a.filter(x=>x.title.toLowerCase().includes(s)||(x.desc||'').toLowerCase().includes(s));if(c)a=a.filter(x=>x.category===c);document.getElementById('vG').innerHTML=a.map(v=>`<div class="vc" onclick="wV('${v.url}')"><div class="vt"><div class="pb">▶</div></div><div class="vi"><h4>${v.title}</h4><p>${v.desc||''}</p></div></div>`).join('')||'<p style="text-align:center;grid-column:1/-1">No matches</p>'}
+function rV(){document.getElementById('vs').value='';document.getElementById('vc').value='';fV()}
 
-<div class="course">
+function rP(o){aP=Object.values(o||{});document.getElementById('pG').innerHTML=aP.map(p=>`<div class="cd"><h3>📁 ${p.name}</h3><p>${p.desc||''}</p></div>`).join('')||'<p style="text-align:center;grid-column:1/-1">No playlists</p>';const s=document.getElementById('vvP');if(s)s.innerHTML='<option value="">No Playlist</option>'+aP.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}
 
-<div class="icon">💊</div>
+function rB(o){aB=Object.values(o||{});document.getElementById('bG').innerHTML=aB.map(b=>`<div class="cd"><h3>${b.title}</h3><p style="margin-top:8px;white-space:pre-wrap">${b.content}</p></div>`).join('')||'<p style="text-align:center;grid-column:1/-1">No posts</p>'}
 
-<h3>Drug Design</h3>
+function rS(o){aE=Object.values(o||{});document.getElementById('sL').innerHTML=aE.map(e=>`<div class="cd" style="margin-bottom:10px"><h3>${e.title}</h3><p>📅 ${e.date} ${e.time||''}</p></div>`).join('')||'<p style="text-align:center">No events</p>'}
 
-<p>
-Discover molecular docking, virtual screening
-and computational drug discovery.
-</p>
+function rT(o){aT=Object.values(o||{});document.getElementById('tG').innerHTML=aT.map(t=>`<div class="cd" style="text-align:center"><div style="color:#fbbf24;font-size:1.1rem">${'★'.repeat(t.stars||5)}</div><p style="margin:10px 0">"${t.text}"</p><h4>${t.name}</h4><small style="color:#9ca3af">${t.role||''}</small></div>`).join('')||'<p style="text-align:center;grid-column:1/-1">No testimonials</p>'}
 
-<div class="learn">Explore →</div>
+function rF(o){aF=Object.values(o||{});document.getElementById('fL').innerHTML=aF.map(f=>`<div class="fq" onclick="this.classList.toggle('on')"><div class="fqq">${f.q}<span>+</span></div><div class="fqa">${f.a}</div></div>`).join('')||'<p style="text-align:center">No FAQ</p>'}
 
-</div>
+let cr=0;
+function setR(n){rq(()=>{const k='bc_r_'+U.phone;if(localStorage.getItem(k)){T('Already rated!',true);return}cr=n;document.querySelectorAll('#stR span').forEach((el,i)=>el.classList.toggle('on',i<n));document.getElementById('rt').textContent=`You rated: ${n}/5`;db.ref('ratings').push({stars:n,user:U.name,phone:U.phone,date:new Date().toLocaleString()});localStorage.setItem(k,'1');T('Thanks for rating!')})}
 
+document.getElementById('rf').addEventListener('submit',e=>{e.preventDefault();rq(()=>{const n=document.getElementById('rn').value.trim(),p=document.getElementById('rp').value.trim(),em=document.getElementById('re').value.trim()||'N/A',c=document.getElementById('rc').value,cp=document.getElementById('rcp').value.trim();if(!n||!p||!c){T('Fill required',true);return}db.ref('coupons').once('value').then(s=>{const cs=Object.values(s.val()||{});let d=0;if(cp){const f=cs.find(x=>x.code.toUpperCase()===cp.toUpperCase());if(f)d=f.discount}db.ref('registrations').push({name:n,phone:p,email:em,course:c,coupon:cp,discount:d,progress:0,date:new Date().toLocaleString()}).then(()=>{T('✅ Registered!');document.getElementById('rf').reset();rD()})})})});
 
-<div class="course">
+document.getElementById('cf').addEventListener('submit',e=>{e.preventDefault();rq(()=>{const n=document.getElementById('cn').value.trim(),em=document.getElementById('ce').value.trim(),m=document.getElementById('cm').value.trim();if(!n||!em||!m){T('Fill all',true);return}const tid='TKT-'+Date.now().toString(36).toUpperCase();db.ref('messages').push({ticketId:tid,name:n,email:em,msg:m,reply:'',date:new Date().toLocaleString()}).then(()=>{T('Sent! Ticket: '+tid);document.getElementById('cf').reset()})})});
 
-<div class="icon">👨‍💻</div>
+function subN(){const e=document.getElementById('ne').value.trim();if(!e){T('Enter email',true);return}db.ref('newsletter').push({email:e,date:new Date().toLocaleString()}).then(()=>{T('✅ Subscribed');document.getElementById('ne').value=''})}
 
-<h3>Programming</h3>
+function tC(){rq(()=>document.getElementById('cbx').classList.toggle('on'))}
+function sC(){const i=document.getElementById('cI'),m=i.value.trim();if(!m||!U)return;db.ref('chats').push({user:U.name,phone:U.phone,msg:m,time:new Date().toLocaleString()});i.value=''}
 
-<p>
-Develop programming skills and apply them
-to scientific and technological projects.
-</p>
+function rD(){if(!U){document.getElementById('dC').innerHTML='<p style="text-align:center;color:#9ca3af">Login to view</p>';return}document.getElementById('ctn').textContent=U.name;db.ref('registrations').once('value').then(s=>{const a=Object.values(s.val()||{}).filter(r=>r.phone===U.phone);document.getElementById('dC').innerHTML=a.map(r=>`<div class="cd" style="margin-bottom:10px"><h3>${r.course}</h3><p>Progress: ${r.progress||0}%</p><div class="pgb"><div class="pgf" style="width:${r.progress||0}%"></div></div><button class="btn" onclick="upP('${r.id}',10)" style="margin-top:6px">+10%</button></div>`).join('')||'<p style="text-align:center;color:#9ca3af">No enrollments</p>'})}
+function upP(id,i){db.ref('registrations/'+id).once('value').then(s=>{const r=s.val(),p=Math.min(100,(r.progress||0)+i);db.ref('registrations/'+id).update({progress:p}).then(()=>{rD();T('Updated!')})})}
 
-<div class="learn">Explore →</div>
+function init(){db.ref('courses').on('value',s=>rC(s.val()||{}));db.ref('videos').on('value',s=>rV(s.val()||{}));db.ref('playlists').on('value',s=>rP(s.val()||{}));db.ref('blog').on('value',s=>rB(s.val()||{}));db.ref('schedule').on('value',s=>rS(s.val()||{}));db.ref('testimonials').on('value',s=>rT(s.val()||{}));db.ref('faq').on('value',s=>rF(s.val()||{}));db.ref('registrations').on('value',s=>{const a=Object.values(s.val()||{});document.getElementById('cS').textContent=a.length;document.getElementById('ttC').textContent=a.length;aRg=a;if(av)rRg(s.val()||{})});db.ref('messages').on('value',s=>{aMs=Object.values(s.val()||{});if(av)rMs(s.val()||{})});db.ref('ratings').on('value',s=>{aRt=Object.values(s.val()||{});if(av)rRt(s.val()||{})});db.ref('newsletter').on('value',s=>{aNl=Object.values(s.val()||{});if(av)rNl(s.val()||{})});db.ref('chats').on('value',s=>{const a=Object.values(s.val()||{});document.getElementById('cM').innerHTML=a.map(m=>`<div style="margin-bottom:6px"><strong style="color:var(--b)">${m.user}:</strong> ${m.msg}</div>`).join('')});rD()}
 
-</div>
+function oA(){document.getElementById('ao').classList.add('on');if(sessionStorage.getItem('bc_a')==='true')sAd()}
+function cA(){document.getElementById('ao').classList.remove('on')}
+function chkP(){const n=document.getElementById('an').value.trim(),p=document.getElementById('ap').value;if(AN.includes(n)&&p===AP){sessionStorage.setItem('bc_a','true');sAd();T('Welcome '+n)}else T('Invalid',true)}
+function sAd(){av=true;document.getElementById('aa').style.display='none';document.getElementById('ac').style.display='block';rAc();db.ref('registrations').once('value').then(s=>rRg(s.val()||{}))}
+function sw(e,t){document.querySelectorAll('.tc').forEach(x=>x.style.display='none');document.getElementById(t).style.display='block';document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));e.target.classList.add('on');if(t==='tC')rAc();if(t==='tV')rAv();if(t==='tP')rAp();if(t==='tB')rAb();if(t==='tS')rAs();if(t==='tCp')rAcp();if(t==='tT')rAt();if(t==='tF')rAf();if(t==='tR')db.ref('registrations').once('value').then(s=>rRg(s.val()||{}));if(t==='tM')db.ref('messages').once('value').then(s=>rMs(s.val()||{}));if(t==='tRt')db.ref('ratings').once('value').then(s=>rRt(s.val()||{}));if(t==='tN')db.ref('newsletter').once('value').then(s=>rNl(s.val()||{}))}
 
+function aCrs(){const t=document.getElementById('ccT').value.trim();if(!t){T('Title required',true);return}db.ref('courses').push({title:t,category:document.getElementById('ccC').value,duration:document.getElementById('ccD').value,price:document.getElementById('ccP').value,desc:document.getElementById('ccDc').value,fullDesc:document.getElementById('ccFd').value,icon:document.getElementById('ccI').value||'📚'}).then(()=>{T('Course added');['ccT','ccD','ccP','ccDc','ccFd'].forEach(i=>document.getElementById(i).value='');rAc()})}
+function rAc(){db.ref('courses').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('cL').innerHTML=a.map(c=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${c.icon||''} ${c.title} (${c.category})</span><button class="dl" onclick="db.ref('courses/${c.id}').remove().then(()=>rAc())">Delete</button></div>`).join('')||'<p>No courses</p>'})}
 
-</div>
+function aVid(){const t=document.getElementById('vvT').value.trim();if(!t){T('Title required',true);return}db.ref('videos').push({title:t,category:document.getElementById('vvC').value,url:document.getElementById('vvU').value,desc:document.getElementById('vvD').value,playlist:document.getElementById('vvP').value}).then(()=>{T('Video added');['vvT','vvU','vvD'].forEach(i=>document.getElementById(i).value='');rAv()})}
+function rAv(){db.ref('videos').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('vL').innerHTML=a.map(v=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${v.title} (${v.category})</span><button class="dl" onclick="db.ref('videos/${v.id}').remove().then(()=>rAv())">Delete</button></div>`).join('')||'<p>No videos</p>'})}
 
-</div>
+function aPl(){const n=document.getElementById('ppN').value.trim();if(!n){T('Name required',true);return}db.ref('playlists').push({name:n,desc:document.getElementById('ppD').value}).then(()=>{T('Created');document.getElementById('ppN').value='';document.getElementById('ppD').value='';rAp()})}
+function rAp(){db.ref('playlists').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('pL').innerHTML=a.map(p=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>📁 ${p.name}</span><button class="dl" onclick="db.ref('playlists/${p.id}').remove().then(()=>rAp())">Delete</button></div>`).join('')||'<p>None</p>'})}
 
-</section>
+function aBl(){const t=document.getElementById('bbT').value.trim();if(!t){T('Title required',true);return}db.ref('blog').push({title:t,content:document.getElementById('bbC').value}).then(()=>{T('Published');document.getElementById('bbT').value='';document.getElementById('bbC').value='';rAb()})}
+function rAb(){db.ref('blog').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('bL').innerHTML=a.map(b=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${b.title}</span><button class="dl" onclick="db.ref('blog/${b.id}').remove().then(()=>rAb())">Delete</button></div>`).join('')||'<p>None</p>'})}
 
+function aEv(){const t=document.getElementById('ssT').value.trim();if(!t){T('Title required',true);return}db.ref('schedule').push({title:t,date:document.getElementById('ssD').value,time:document.getElementById('ssTm').value}).then(()=>{T('Added');document.getElementById('ssT').value='';rAs()})}
+function rAs(){db.ref('schedule').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('sL').innerHTML=a.map(e=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${e.title} - ${e.date}</span><button class="dl" onclick="db.ref('schedule/${e.id}').remove().then(()=>rAs())">Delete</button></div>`).join('')||'<p>None</p>'})}
 
-<!-- ABOUT -->
+function aCp(){const c=document.getElementById('cpC').value.trim();if(!c){T('Code required',true);return}db.ref('coupons').push({code:c.toUpperCase(),discount:document.getElementById('cpD').value,expiry:document.getElementById('cpE').value}).then(()=>{T('Created');document.getElementById('cpC').value='';document.getElementById('cpD').value='';rAcp()})}
+function rAcp(){db.ref('coupons').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('cpL').innerHTML=a.map(c=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${c.code} - ${c.discount}%</span><button class="dl" onclick="db.ref('coupons/${c.id}').remove().then(()=>rAcp())">Delete</button></div>`).join('')||'<p>None</p>'})}
 
-<section class="about" id="about">
+function aTs(){const n=document.getElementById('ttN').value.trim();if(!n){T('Name required',true);return}db.ref('testimonials').push({name:n,role:document.getElementById('ttR').value,text:document.getElementById('ttX').value,stars:parseInt(document.getElementById('ttS').value)||5}).then(()=>{T('Added');['ttN','ttR','ttX'].forEach(i=>document.getElementById(i).value='');rAt()})}
+function rAt(){db.ref('testimonials').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('tL').innerHTML=a.map(t=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${t.name} (${t.stars}★)</span><button class="dl" onclick="db.ref('testimonials/${t.id}').remove().then(()=>rAt())">Delete</button></div>`).join('')||'<p>None</p>'})}
 
-<div class="container">
+function aFq(){const q=document.getElementById('ffQ').value.trim();if(!q){T('Question required',true);return}db.ref('faq').push({q,a:document.getElementById('ffA').value}).then(()=>{T('Added');document.getElementById('ffQ').value='';document.getElementById('ffA').value='';rAf()})}
+function rAf(){db.ref('faq').once('value').then(s=>{const a=Object.values(s.val()||{});document.getElementById('fL').innerHTML=a.map(f=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${f.q}</span><button class="dl" onclick="db.ref('faq/${f.id}').remove().then(()=>rAf())">Delete</button></div>`).join('')||'<p>None</p>'})}
 
-<div class="about-grid">
+function rRg(o){const a=Object.values(o||{});document.getElementById('ttC').textContent=a.length;const c=document.getElementById('rT');if(!a.length){c.innerHTML='<p>No registrations</p>';return}c.innerHTML='<table><tr><th>Name</th><th>Phone</th><th>Email</th><th>Course</th><th>Date</th><th></th></tr>'+a.map(r=>`<tr><td>${r.name}</td><td>${r.phone}</td><td>${r.email}</td><td>${r.course}</td><td>${r.date}</td><td><button class="dl" onclick="db.ref('registrations/${r.id}').remove()">✕</button></td></tr>`).join('')+'</table>'}
+function exCSV(){db.ref('registrations').once('value').then(s=>{const a=Object.values(s.val()||{});if(!a.length){T('No data',true);return}let c='Name,Phone,Email,Course,Discount,Date\n';a.forEach(r=>c+=`${r.name},${r.phone},${r.email},${r.course},${r.discount||0},${r.date}\n`);const b=new Blob([c],{type:'text/csv'}),l=document.createElement('a');l.href=URL.createObjectURL(b);l.download='registrations.csv';l.click();T('CSV exported')})}
 
-<div>
+function rMs(o){const a=Object.values(o||{});document.getElementById('mL').innerHTML=a.map(m=>`<div style="border:1px solid #333;border-radius:10px;padding:10px;margin-bottom:8px"><strong>${m.name}</strong> (${m.email})<p style="margin:6px 0;font-size:.85rem">${m.msg}</p>${m.reply?`<div style="background:rgba(16,185,129,.1);padding:7px;border-radius:6px;margin-top:6px"><strong style="color:var(--b)">Reply:</strong> ${m.reply}</div>`:''}<div style="margin-top:8px;display:flex;gap:5px"><input id="rp_${m.id}" placeholder="Reply..." style="flex:1"><button class="btn" onclick="rpM('${m.id}')">Reply</button><button class="dl" onclick="db.ref('messages/${m.id}').remove()">Delete</button></div><small style="color:#888">Ticket: ${m.ticketId} • ${m.date}</small></div>`).join('')||'<p>No messages</p>'}
+function rpM(id){const i=document.getElementById('rp_'+id),r=i.value.trim();if(!r)return;db.ref('messages/'+id).update({reply:r}).then(()=>{T('Reply sent');db.ref('messages').once('value').then(s=>rMs(s.val()||{}))})}
 
-<h2>Education Without Boundaries.</h2>
+function rRt(o){const a=Object.values(o||{});document.getElementById('rtL').innerHTML=a.map(r=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${r.stars}⭐ by ${r.user}</span><button class="dl" onclick="db.ref('ratings/${r.id}').remove().then(()=>db.ref('ratings').once('value').then(s=>rRt(s.val()||{})))">Delete</button></div>`).join('')||'<p>No ratings</p>'}
 
-<p>
-Bio Coding Academy aims to make modern scientific and technological
-education accessible to students through practical and understandable
-learning experiences.
-</p>
-
-<p>
-Our platform brings together biology, biotechnology, computational
-science and programming in one educational environment.
-</p>
-
-<div class="features">
-
-<div class="feature">✓ Practical learning</div>
-<div class="feature">✓ Modern scientific fields</div>
-<div class="feature">✓ Student-focused education</div>
-<div class="feature">✓ Technology-driven learning</div>
-
-</div>
-
-</div>
-
-
-<div class="hero-card">
-
-<div class="dna">🔬</div>
-
-<h3>Learn Something New Every Day</h3>
-
-<p>
-Knowledge becomes more powerful when science and technology
-work together.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- REVIEWS -->
-
-<section id="reviews">
-
-<div class="container">
-
-<div class="section-title">
-
-<h2>What Students Say</h2>
-
-<p>Student reviews will appear here.</p>
-
-</div>
-
-
-<div class="review-grid">
-
-
-<div class="review">
-
-<div class="stars">★★★★★</div>
-
-<p>
-"Bio Coding Academy helped me understand scientific concepts
-in a much easier way."
-</p>
-
-<div class="student">Student</div>
-
-</div>
-
-
-<div class="review">
-
-<div class="stars">★★★★★</div>
-
-<p>
-"The combination between biotechnology and programming
-is exactly what I was looking for."
-</p>
-
-<div class="student">Student</div>
-
-</div>
-
-
-<div class="review">
-
-<div class="stars">★★★★★</div>
-
-<p>
-"A great place to start learning computational biology
-and modern biotechnology."
-</p>
-
-<div class="student">Student</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CTA -->
-
-<div class="cta">
-
-<h2>Ready to Start Learning?</h2>
-
-<p>
-Join Bio Coding Academy and start building your scientific
-and technological skills.
-</p>
-
-<a href="#" class="primary">
-Create Your Account
-</a>
-
-</div>
-
-
-<!-- FOOTER -->
-
-<footer id="contact">
-
-<div class="footer-grid">
-
-<div>
-
-<h3>Bio Coding Academy</h3>
-
-<p>
-An educational platform connecting Biotechnology,
-Bioinformatics, Drug Design and Programming.
-</p>
-
-</div>
-
-
-<div>
-
-<h3>Platform</h3>
-
-<a href="#home">Home</a>
-<a href="#courses">Courses</a>
-<a href="#about">About</a>
-<a href="#reviews">Reviews</a>
-
-</div>
-
-
-<div>
-
-<h3>Learning</h3>
-
-<a href="#courses">Biotechnology</a>
-<a href="#courses">Bioinformatics</a>
-<a href="#courses">Drug Design</a>
-<a href="#courses">Programming</a>
-
-</div>
-
-
-<div>
-
-<h3>Contact</h3>
-
-<p>Email: info@biocodingacademy.com</p>
-<p>Educational Platform</p>
-
-</div>
-
-</div>
-
-
-<div class="copyright">
-
-© 2026 Bio Coding Academy. All Rights Reserved.
-
-</div>
-
-</footer>
-
+function rNl(o){const a=Object.values(o||{});document.getElementById('nL').innerHTML=a.map(n=>`<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #333"><span>${n.email}</span><button class="dl" onclick="db.ref('newsletter/${n.id}').remove().then(()=>db.ref('newsletter').once('value').then(s=>rNl(s.val()||{})))">Delete</button></div>`).join('')||'<p>No subscribers</p>'}
+
+document.getElementById('ao').addEventListener('click',e=>{if(e.target===e.currentTarget)cA()});
+if(U)document.getElementById('ctn').textContent=U.name;
+init();
+</script>
 </body>
-  </html>
+</html>
